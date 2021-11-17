@@ -1,0 +1,17 @@
+{
+  "name": "zoo_keeper_tracker",
+  "version": "1.0.0",
+  "description": "This is the server for the react client. Zoos can have their zoo keepers create accounts (where they specify which group of animals they feed) and keep a log of animals, the time and date they got fed, and any additional notes they may have.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.2"
+  }
+}
