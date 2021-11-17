@@ -1,3 +1,4 @@
+Based off this challenge: https://github.com/IngeborgSlegers/broken-app-challenge-server
 Welcome to this node, express, and postgreSQL challenge!
 
 This database allows zoo keepers to create accounts (where they specify which group of animals they feed) and keep a log of animals, the time and date they were fed, and any additional notes they may have.
