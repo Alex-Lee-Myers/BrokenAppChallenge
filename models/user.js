@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allonNull: false
     },
-    specialty: {
+    speciality: {
       type: DataTypes.ENUM(), //FIGURE THIS OUT
       allowNull: false
     }

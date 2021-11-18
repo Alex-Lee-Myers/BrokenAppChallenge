@@ -1,17 +1,27 @@
 const express = require('express');
-const app = express;
 const sequelize = require('./db');
 const bodyparser = require('body-parser');
-const user = require('./controllers/usercontroller');
-const zoos = require('./controllers/zoocontroller');
+const db = require("./db");
+const user = require('./controllers/userController');
+const zoos = require('./controllers/zooKeeperController');
+const app = express();
 
-db.sync();
 
-app.use(bodyparser.json());
+app.use(express.json());
 
 app.use('/user', user);
-app.use('/zoo, zoo');
+app.use('/zoo', zoos);
 
-app.use(require('./middleware/validate-session'));
+// app.use(require('./middleware/validate-session'));
 
-app.listen(3000, () => console.log("App is listening on 3000"))
+db.authenticate()
+    .then(() => db.sync({ force: true })) // => {force: true}
+    .then(() => {
+        app.listen(3000, () =>
+            console.log(`[Server: ] App is listening on Port ${3000}`)
+        );
+    })
+    .catch((err) => {
+        console.log(`[Server: ] Server Crashed. Error is = ${err}`);
+        console.error(err);
+    });

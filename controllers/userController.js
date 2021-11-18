@@ -1,25 +1,25 @@
 const router = require('express').Router();
-const cbrypt = require('bcrypt');
+const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
-const User = require('../models/index').sequelize.import('../models/user');
-
-router.post('/createuser', (req, res) => {
+const {User} = require('../models');
+//!CREATE USER
+router.post('/login', (req, res) => {
   User.findOne({
     where: {
         email: req.body.user.email
     }
   })
   .then(
-    success = user => {
-      cbrypt.compare(reqUser.password, user.password)
+    success = newUser => {
+      bcrypt.compare(reqUser.password, user.password)
       .then(matches => {
         if(matches) {
           console.log('matches :', matches)
-          const token = jwt.sign({ id: user. id}, process.env.JWT_SECRET, { expiresIn: 60 * 60 * 24 });
+          const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: 60 * 60 * 24 });
 
           res.status(200).json({
-            user : user,
-            token : sessionToken
+            user: newUser,
+            sessionToken: token
           });
         } else {
           res.status(500).json("err");
@@ -27,20 +27,21 @@ router.post('/createuser', (req, res) => {
       });
     },
 
-    fail = user => {
+    fail = err => {
       res.status(500).json(err.message);
     }
   )
 })
-
-router.post('/login', (req, res) => {
+//! LOGIN
+router.post('/createuser', (req, res) => {
     const user = req.body.user;
 
     User.create({
-      fullName: user.fullName,
+      firstName: user.fullName,
+      lastName: user.lastName,
       email: user.email,
       password: bcrypt.hashSync(user.password),
-      specilaity: req.body.specialty
+      speciality: req.body.speciality
     })
     .then(
       success = newUser => {
@@ -52,10 +53,10 @@ router.post('/login', (req, res) => {
       });
 });
 
-router.get('/:speciality', (res, res) => {
+router.get('/:speciality', (req, res) => {
   User.findAll({
     where: {
-      specialty: req.body.specialy
+      speciality: req.body.speciality
     }
   })
   .then(
